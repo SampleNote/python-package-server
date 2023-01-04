@@ -36,8 +36,8 @@
     <script async defer>
       $(document).ready(function(){
         let repos = [
-                'midi',
-                'rtmidi2',
+                'SampleNote/midi',
+                'SampleNote/rtmidi2',
         ];
         repos.reverse();
 
@@ -46,7 +46,7 @@
         });
 
         repos.forEach(function(repo_name){
-          $.get('https://api.github.com/repos/SampleNote/' + repo_name, function(response){
+          $.get('https://api.github.com/repos/' + repo_name, function(response){
             table.row.add([
               '<a href="' + response.html_url + '">' + response.name + '</a>',
               response.description,

@@ -41,23 +41,32 @@ def _get_protocol():
 
     return protocol
 
+def _get_organization():
+    org_name = sys.argv[4]
+    return org_name
+
+def _get_repository():
+    repo_name = sys.argv[5]
+    return repo_name
 
 if __name__ == "__main__":
     app = _get_app_name()
     version = _get_version_number()
     protocol = _get_protocol()
+    git_org = _get_organization()
+    git_repo = _get_repository()
 
     with open("commit_message.txt", "w") as f:
-        commit_message = f"Publish {app} - {version}"
+        commit_message = f"Publish {app} - {version} in GitHub {git_org}/{git_repo}"
         f.write(commit_message)
 
     with open(f"{app}/index.html", "r+") as html:
         soup = BeautifulSoup(html, 'html.parser')
         new_a = soup.new_tag("a")
         if protocol == 'https':
-            new_a["href"] = f"git+https://github.com/SampleNote/{app}.git@{version}#egg={app}-{version}"
+            new_a["href"] = f"git+https://github.com/{git_org}/{git_repo}.git@{version}#egg={app}-{version}"
         else: # ssh
-            new_a["href"] = f"git+ssh://git@github.com/SampleNote/{app}.git@{version}#egg={app}-{version}"
+            new_a["href"] = f"git+ssh://git@github.com/{git_org}/{git_repo}.git@{version}#egg={app}-{version}"
         new_a.string = f"{app}-{version}"
         soup.html.body.insert(0, new_a)
 
