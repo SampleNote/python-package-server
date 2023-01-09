@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["python-midi", "3.0.1", "https"]
+            "args": ["my-lib", "3.0.1", "ssh", "my-org", "my-repo"]
         }
     ]
 }
