@@ -54,7 +54,7 @@ def _get_repository():
     return repo_name
 
 def _set_lib_main_page(org, repo, app):
-    with open(LIBRARY_JSON_FILE, 'w+') as json_file:
+    with open(LIBRARY_JSON_FILE, 'r') as json_file:
         json_data = json.load(json_file)
         if not any(data_entry['lib_name'] == app for data_entry in json_data):
             new_lib = {
@@ -62,8 +62,9 @@ def _set_lib_main_page(org, repo, app):
                 "repo_url": f'{GITHUB_URL}/{org}/{repo}',
                 "lib_name": app
             }
-            json_data.update(new_lib)
-            json.dump(json_data, json_file)
+            json_data.append(new_lib)
+            with open(LIBRARY_JSON_FILE, 'w+') as new_json_file:
+                json.dump(json_data, new_json_file)
 
 if __name__ == "__main__":
     app = _get_app_name()
