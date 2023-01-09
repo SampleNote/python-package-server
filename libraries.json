@@ -1,0 +1,5 @@
+[
+{ "repo_name": "midi", "repo_url": "https://github.com/SampleNote/midi", "lib_name": "midi" },
+{ "repo_name": "rtmidi2", "repo_url": "https://github.com/SampleNote/rtmidi2", "lib_name": "rtmidi2" },
+{ "repo_name": "samplenote-data", "repo_url": "https://github.com/SampleNote/samplenote-data", "lib_name": "samplenotedata" }
+]
