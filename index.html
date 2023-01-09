@@ -20,7 +20,6 @@
                 <thead>
                 <tr>
                     <th scope="col" id="repository"><i class="fab fa-github"></i> Repository</th>
-                    <th scope="col" id="description"><i class="far fa-comment"></i> Description</th>
                     <th scope="col" id="index"><i class="fas fa-info-circle"></i> PyPI</th>
                 </tr>
                 </thead>
@@ -35,23 +34,15 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script async defer>
       $(document).ready(function(){
-        let repos = [
-                'SampleNote/midi',
-                'SampleNote/rtmidi2',
-                'SampleNote/samplenote-data',
-        ];
-        repos.reverse();
-
         let table = $('#pypi').DataTable({
           "paging": false
         });
 
-        repos.forEach(function(repo_name){
-          $.get('https://api.github.com/repos/' + repo_name, function(response){
+        $.get('https://samplenote.github.io/python-package-server/libraries.json', function(response) {
+          response.forEach(function(lib) {
             table.row.add([
-              '<a href="' + response.html_url + '">' + response.name + '</a>',
-              response.description,
-              '<a href="' + response.name + '">' + response.name + '</a>'
+              '<a href="' + lib.repo_url + '">' + lib.repo_name + '</a>',
+              '<a href="' + lib.lib_name + '">' + lib.lib_name + '</a>'
             ]).draw();
           }, 'json');
         });

@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import os
 import sys
 import shutil
+import json
+
+LIBRARY_JSON_FILE = 'libraries.json'
+GITHUB_URL = 'https://github.com'
 
 def _get_app_name():
     app_name = sys.argv[1]
@@ -49,12 +53,25 @@ def _get_repository():
     repo_name = sys.argv[5]
     return repo_name
 
+def _set_lib_main_page(org, repo, app):
+    with open(LIBRARY_JSON_FILE, 'w+') as json_file:
+        json_data = json.load(json_file)
+        if not any(data_entry['lib_name'] == app for data_entry in json_data):
+            new_lib = {
+                "repo_name": repo,
+                "repo_url": f'{GITHUB_URL}/{org}/{repo}',
+                "lib_name": app
+            }
+            json_data.update(new_lib)
+            json.dump(json_data, json_file)
+
 if __name__ == "__main__":
     app = _get_app_name()
     version = _get_version_number()
     protocol = _get_protocol()
     git_org = _get_organization()
     git_repo = _get_repository()
+    _set_lib_main_page(git_org, git_repo, app)
 
     with open("commit_message.txt", "w") as f:
         commit_message = f"Publish {app} - {version} in GitHub {git_org}/{git_repo}"
